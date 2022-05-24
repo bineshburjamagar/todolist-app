@@ -3,13 +3,18 @@ import 'package:todolist/widgets/task_list.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
+  Widget buildButtomSheet(BuildContext context) {
+    return Container();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEC6E0E),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(context: context, builder: buildButtomSheet);
+        },
         backgroundColor: const Color(0xFFEC6E0E),
         child: const Icon(Icons.add_circle_outline),
       ),
