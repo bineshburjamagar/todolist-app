@@ -1,3 +1,6 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/widgets/task_list.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +15,41 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   Widget buildButtomSheet(BuildContext context) {
-    return Container();
+    return Container(
+      color: const Color(0xFF757575),
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0))),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Add Task',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30.0, color: Color(0xFFEC6E0E)),
+              ),
+              const TextField(
+                autofocus: true,
+                textAlign: TextAlign.center,
+              ),
+              FlatButton(
+                onPressed: () {},
+                child: const Text(
+                  'Add',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.orangeAccent,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
