@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/widgets/task_list.dart';
+import 'package:intl/intl.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   Widget buildButtomSheet(BuildContext context) {
     return Container();
   }
@@ -16,7 +24,7 @@ class TasksScreen extends StatelessWidget {
           showModalBottomSheet(context: context, builder: buildButtomSheet);
         },
         backgroundColor: const Color(0xFFEC6E0E),
-        child: const Icon(Icons.add_circle_outline),
+        child: const Icon(Icons.add),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,30 +34,74 @@ class TasksScreen extends StatelessWidget {
                 top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CircleAvatar(
-                  child: Icon(
-                    Icons.view_list_rounded,
-                    size: 30.0,
-                    color: Color(0xFFEC6E0E),
-                  ),
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
-                ),
-                SizedBox(height: 10.0),
-                Text(
+              children: [
+                // const CircleAvatar(
+                //   child: Icon(
+                //     Icons.view_list_rounded,
+                //     size: 30.0,
+                //     color: Color(0xFFEC6E0E),
+                //   ),
+                //   backgroundColor: Colors.white,
+                //   radius: 30.0,
+                // ),
+                // const SizedBox(height: 10.0),
+
+                const Text(
                   'TO DO LIST',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 40,
                       fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  '666 Tasks',
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                // const Text(
+                //   '666 Tasks',
+                //   style: TextStyle(color: Colors.white, fontSize: 18.0),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Text(
+                            'Today',
+                            style: TextStyle(color: Colors.white, fontSize: 28),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0, bottom: 5.0),
+            child: Text(DateFormat.yMMMEd().format(DateTime.now()),
+                style: const TextStyle(color: Colors.white70, fontSize: 18)),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 20, top: 20),
+            child: DatePicker(
+              DateTime.now(),
+              height: 80.0,
+              width: 60.0,
+              initialSelectedDate: DateTime.now(),
+              selectionColor: Colors.white,
+              selectedTextColor: const Color(0xFFEC6E0E),
+              dateTextStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+          ),
+          const SizedBox(
+            height: 10.0,
           ),
           Expanded(
             child: Container(
