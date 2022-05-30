@@ -1,9 +1,7 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
+import 'package:todolist/models/task.dart';
+import 'package:todolist/screens/add_task_screen.dart';
 import 'package:todolist/widgets/task_list.dart';
-import 'package:intl/intl.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -13,143 +11,82 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  Widget buildButtomSheet(BuildContext context) {
-    return Container(
-      color: const Color(0xFF757575),
-      child: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0))),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Add Task',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30.0, color: Color(0xFFEC6E0E)),
-              ),
-              const TextField(
-                autofocus: true,
-                textAlign: TextAlign.center,
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: const Text(
-                  'Add',
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.orangeAccent,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
+  List<Task> tasks = [Task(name: 'Buy weed'), Task(name: 'Buy bonf')];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEC6E0E),
+      backgroundColor: const Color(0xffFF6600),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(context: context, builder: buildButtomSheet);
-        },
-        backgroundColor: const Color(0xFFEC6E0E),
-        child: const Icon(Icons.add),
-      ),
+          backgroundColor: const Color(0xffFF6600),
+          child: const Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => SingleChildScrollView(
+                        child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: AddTaskScreen((newTaskTitle) {
+                        setState(() {
+                          tasks.add(Task(name: newTaskTitle));
+                        });
+                        Navigator.pop(context);
+                      }),
+                    )));
+          }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             padding: const EdgeInsets.only(
                 top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const CircleAvatar(
-                //   child: Icon(
-                //     Icons.view_list_rounded,
-                //     size: 30.0,
-                //     color: Color(0xFFEC6E0E),
-                //   ),
-                //   backgroundColor: Colors.white,
-                //   radius: 30.0,
-                // ),
-                // const SizedBox(height: 10.0),
-
-                const Text(
-                  'TO DO LIST',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700),
+              children: <Widget>[
+                const CircleAvatar(
+                  child: Icon(
+                    Icons.list,
+                    size: 30.0,
+                    color: Color(0xffFF6600),
+                  ),
+                  backgroundColor: Colors.white,
+                  radius: 30.0,
                 ),
-                // const Text(
-                //   '666 Tasks',
-                //   style: TextStyle(color: Colors.white, fontSize: 18.0),
-                // ),
                 const SizedBox(
-                  height: 10,
+                  height: 10.0,
                 ),
-                SizedBox(
-                  height: 40,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Text(
-                            'Today',
-                            style: TextStyle(color: Colors.white, fontSize: 28),
-                          ),
-                        ],
-                      ),
-                    ],
+                const Text(
+                  'Todo List',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 50.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  '${tasks.length} Task',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, bottom: 5.0),
-            child: Text(DateFormat.yMMMEd().format(DateTime.now()),
-                style: const TextStyle(color: Colors.white70, fontSize: 18)),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20, top: 20),
-            child: DatePicker(
-              DateTime.now(),
-              height: 80.0,
-              width: 60.0,
-              initialSelectedDate: DateTime.now(),
-              selectionColor: Colors.white,
-              selectedTextColor: const Color(0xFFEC6E0E),
-              dateTextStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-            ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0))),
-              child: const TaskList(),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              child: TaskList(tasks),
             ),
-          )
+          ),
         ],
       ),
     );
