@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/screens/add_task_screen.dart';
 import 'package:todolist/widgets/task_list.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/models/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
-  const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [Task(name: 'Buy weed'), Task(name: 'Buy bonf')];
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +22,9 @@ class _TasksScreenState extends State<TasksScreen> {
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: AddTaskScreen((newTaskTitle) {
-                        setState(() {
-                          tasks.add(Task(name: newTaskTitle));
-                        });
+                        // setState(() {
+                        //   tasks.add(Task(name: newTaskTitle));
+                        // });
                         Navigator.pop(context);
                       }),
                     )));
@@ -65,7 +59,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} Task',
+                  '${Provider.of<TaskData>(context).tasks.length} Task',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -84,7 +78,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TaskList(tasks),
+              child: TaskList(),
             ),
           ),
         ],
