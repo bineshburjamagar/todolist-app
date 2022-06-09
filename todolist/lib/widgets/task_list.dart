@@ -9,18 +9,22 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return TaskTile(
-            isChecked: Provider.of<TaskData>(context).tasks[index].isDone,
-            taskTitle: Provider.of<TaskData>(context).tasks[index].name,
-            checkboxCallback: (bool? checkBoxState) {
-              // setState(() {
-              //   Provider.of<TaskData>(context).tasks[index].toggleDone();
-              // });
-            });
+    return Consumer<TaskData>(
+      builder: (context, taskData, child) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return TaskTile(
+                isChecked: taskData.tasks[index].isDone,
+                taskTitle: taskData.tasks[index].name,
+                checkboxCallback: (bool? checkBoxState) {
+                  // setState(() {
+                  //   Provider.of<TaskData>(context).tasks[index].toggleDone();
+                  // });
+                });
+          },
+          itemCount: taskData.tasks.length,
+        );
       },
-      itemCount: Provider.of<TaskData>(context).tasks.length,
     );
   }
 }
