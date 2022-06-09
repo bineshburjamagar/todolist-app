@@ -52,7 +52,8 @@ class AddTaskScreen extends StatelessWidget {
               ),
               color: const Color(0xffFF6600),
               onPressed: () {
-                Provider.of<TaskData>(context).addTask(newTaskTitle);
+                Provider.of<TaskData>(context, listen: false)
+                    .addTask(newTaskTitle);
                 Navigator.pop(context);
               },
             ),
