@@ -1,14 +1,18 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:todolist/models/task.dart';
+import 'package:todolist/widgets/task_list.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addTaskCallback;
-  // ignore: use_key_in_widget_constructors
-  const AddTaskScreen(this.addTaskCallback);
+  const AddTaskScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    String? newTaskTitle;
+    late String newTaskTitle;
 
     return Container(
       color: const Color(0xff757575),
@@ -48,7 +52,8 @@ class AddTaskScreen extends StatelessWidget {
               ),
               color: const Color(0xffFF6600),
               onPressed: () {
-                addTaskCallback(newTaskTitle);
+                Provider.of<TaskData>(context).addTask(newTaskTitle);
+                Navigator.pop(context);
               },
             ),
           ],
